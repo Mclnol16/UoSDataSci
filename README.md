@@ -1,7 +1,7 @@
 # Introduction to Data Science
 # University of Scranton
 ## Jason M Graham
-## This is a github repo for course content for MATH 384.
+## This is a github repo for course content for MATH 384 Introduction to Data Science.
 
 This course will run during the Fall 2018 semester. Cotent will be added to the
 repo as the course proceeds. For students enrolled in the course, addtional
