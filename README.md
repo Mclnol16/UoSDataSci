@@ -1,5 +1,5 @@
 # Introduction to Data Science
-## Jason M Graham
+## Jason M. Graham
 ## This is a github repo for course content for MATH 384 Introduction to Data Science.
 
 This course will run during the Fall 2018 semester. Content will be added to the
