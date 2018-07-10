@@ -21,8 +21,10 @@ For this course, we will use the [R](https://www.r-project.org/) language. R can
 
 ## Class Resources
 
-### R for Data Science
+### R for Data Science and Other Books
 A valuable reference for the course is the text *R for Data Science* by Grolemund and Wickham. An online version of this text can be found [here](http://r4ds.had.co.nz/).
+
+In addition to *R for Data Science*, the books [*Data Science Design Manual*](http://www.data-manual.com/) and [*Modern Data Science with R*](https://mdsr-book.github.io/index.html) are also very valuable resources. 
 
 ### Git and Github
 It is recommended that you use the [git](https://git-scm.com/) version control system for tracking your code. If you do not already have git installed on your computer (MAC probably already installed, Windows probably not installed), it can be install from [here](https://git-scm.com/). The github desktop app makes working with git very convenient; this can be installed [here](https://desktop.github.com/).
