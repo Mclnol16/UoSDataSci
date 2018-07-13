@@ -13,7 +13,7 @@ To obtain the files from this repo, you can either clone the repo or download th
 
 To update the repository, use the command
 
-`git pull --rebase origin master`
+`git pull origin master`
 
 Alternatively, you can use the [github desktop](https://desktop.github.com/) app for accompishing either of these tasks.
 
@@ -24,10 +24,10 @@ For this course, we will use the [R](https://www.r-project.org/) language. R can
 ### R for Data Science and Other Books
 A valuable reference for the course is the text *R for Data Science* by Grolemund and Wickham. An online version of this text can be found [here](http://r4ds.had.co.nz/).
 
-In addition to *R for Data Science*, the books [*Data Science Design Manual*](http://www.data-manual.com/) and [*Modern Data Science with R*](https://mdsr-book.github.io/index.html) are also very valuable resources. 
+In addition to *R for Data Science*, the books [*Data Science Design Manual*](http://www.data-manual.com/) and [*Modern Data Science with R*](https://mdsr-book.github.io/index.html) are also very valuable resources.
 
 ### Git and Github
-It is recommended that you use the [git](https://git-scm.com/) version control system for tracking your code. If you do not already have git installed on your computer (MAC probably already installed, Windows probably not installed), it can be install from [here](https://git-scm.com/). The github desktop app makes working with git very convenient; this can be installed [here](https://desktop.github.com/).
+It is recommended that you use the [git](https://git-scm.com/) version control system for tracking your code. If you do not already have git installed on your computer (MAC probably already installed, Windows probably not installed), it can be install from [here](https://git-scm.com/). The github desktop app makes working with git very convenient; this can be installed [here](https://desktop.github.com/). To learn more of the details on version control with git and github, see this [article](https://peerj.com/preprints/3159/) or the [git book](https://git-scm.com/book/en/v2).
 
 It is also recommended that you have a reliable text editor installed. Atom is a good example and can be installed [here](https://atom.io/).
 
