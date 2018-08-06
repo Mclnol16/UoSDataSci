@@ -1,9 +1,9 @@
 # Introduction to Data Science
 ## This is a github repository for course content for MATH 384 Introduction to Data Science.
 
-**Instructor:** Jason M. Graham
+**Instructor:** [Jason M. Graham](https://sites.google.com/site/jasonmgrahamus/)
 
-**Contact:** Email: jason.graham@scranton.edu; Phone: 570-941-7491
+**Contact:** Email: jason.graham@scranton.edu;
 
 This course will run during the Fall 2018 semester. Content will be added to the
 repo as the course proceeds. For students enrolled in the course, addtional
