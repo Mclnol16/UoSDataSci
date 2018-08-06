@@ -1,6 +1,8 @@
 # Introduction to Data Science
-## Jason M. Graham
-## This is a github repo for course content for MATH 384 Introduction to Data Science.
+## This is a github repository for course content for MATH 384 Introduction to Data Science.
+
+**Instructor:** Jason M. Graham
+**Contact:** Email: jason.graham@scranton.edu; Phone: 570-941-7491
 
 This course will run during the Fall 2018 semester. Content will be added to the
 repo as the course proceeds. For students enrolled in the course, addtional
@@ -17,7 +19,7 @@ To update the repository, use the command
 
 Alternatively, you can use the [github desktop](https://desktop.github.com/) app for accompishing either of these tasks.
 
-For this course, we will use the [R](https://www.r-project.org/) language. R can be downloaded for free [here](https://cran.revolutionanalytics.com/). In addition, we will use the [RStudio](https://www.rstudio.com/) integrated development environment (IDE) which can be downloaded [here](https://www.rstudio.com/products/rstudio/download/#download). It is also possible to run R and Rstudio virtually through the cloud through RStudio-cloud. This can be accomplished by going [here](https://rstudio.cloud/). One very nice feature of RStudio-cloud is that it has a number of tutorials to help learn to use R listed under the primers tab. 
+For this course, we will use the [R](https://www.r-project.org/) language. R can be downloaded for free [here](https://cran.revolutionanalytics.com/). In addition, we will use the [RStudio](https://www.rstudio.com/) integrated development environment (IDE) which can be downloaded [here](https://www.rstudio.com/products/rstudio/download/#download). It is also possible to run R and Rstudio virtually through the cloud through RStudio-cloud. This can be accomplished by going [here](https://rstudio.cloud/). One very nice feature of RStudio-cloud is that it has a number of tutorials to help learn to use R listed under the primers tab.
 
 ## Class Resources
 
