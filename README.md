@@ -3,7 +3,7 @@
 
 **Instructor:** [Jason M. Graham](https://sites.google.com/site/jasonmgrahamus/)
 
-**Contact:** Email: jason.graham@scranton.edu;
+**Contact:** Email: jason.graham@scranton.edu
 
 This course will run during the Fall 2018 semester. Content will be added to the
 repo as the course proceeds. For students enrolled in the course, addtional
