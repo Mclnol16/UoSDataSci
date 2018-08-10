@@ -5,7 +5,7 @@
 
 **Contact:** Email: jason.graham@scranton.edu
 
-This course will run during the Fall 2018 semester. Content will be added to the
+This course will run during the Fall 2018 semester at the [University of Scranton](http://www.scranton.edu/). Content will be added to the
 repo as the course proceeds. For students enrolled in the course, addtional
 material such as the official class syllabus, readings, etc. will be posted
 on the learning management system (D2L) for the course.
