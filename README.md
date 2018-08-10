@@ -6,11 +6,11 @@
 **Contact:** Email: jason.graham@scranton.edu
 
 This course will run during the Fall 2018 semester at the [University of Scranton](http://www.scranton.edu/). Content will be added to the
-repo as the course proceeds. For students enrolled in the course, addtional
+repository as the course proceeds. For students enrolled in the course, addtional
 material such as the official class syllabus, readings, etc. will be posted
 on the learning management system (D2L) for the course.
 
-To obtain the files from this repo, you can either clone the repo or download the files directly. To download, simply click the **Clone or download** button and then select **Download zip**. To clone the repo you must have [git](https://git-scm.com/) installed; information on this can be found below. With git installed, use the command (in your terminal or command window)
+To obtain the files from this repository, you can either clone the repo or download the files directly. To download, simply click the **Clone or download** button and then select **Download zip**. To clone the repo you must have [git](https://git-scm.com/) installed; information on this can be found below. With git installed, use the command (in your terminal or command window)
 
 `git clone https://github.com/jmgraham30/UoSDataSci.git`
 
