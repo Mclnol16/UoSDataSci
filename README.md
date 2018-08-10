@@ -1,6 +1,8 @@
 # Introduction to Data Science
 ## This is a github repository for course content for MATH 384 Introduction to Data Science.
 
+### Course Information
+
 **Instructor:** [Jason M. Graham](https://sites.google.com/site/jasonmgrahamus/)
 
 **Contact:** Email: jason.graham@scranton.edu
@@ -9,6 +11,13 @@ This course will run during the Fall 2018 semester at the [University of Scranto
 repository as the course proceeds. For students enrolled in the course, addtional
 material such as the official class syllabus, readings, etc. will be posted
 on the learning management system (D2L) for the course.
+
+### Repository Contents
+
+The contents of this repository are
+* a folder with files for a generic syllabus
+* a folder with files for the guidelines for a course project
+* a folder with code relevant to implementing and applying the data science workflow 
 
 To obtain the files from this repository, you can either clone the repo or download the files directly. To download, simply click the **Clone or download** button and then select **Download zip**. To clone the repo you must have [git](https://git-scm.com/) installed; information on this can be found below. With git installed, use the command (in your terminal or command window)
 
@@ -20,9 +29,9 @@ To update the repository, use the command
 
 Alternatively, you can use the [github desktop](https://desktop.github.com/) app for accompishing either of these tasks.
 
-For this course, we will use the [R](https://www.r-project.org/) language. R can be downloaded for free [here](https://cran.revolutionanalytics.com/). In addition, we will use the [RStudio](https://www.rstudio.com/) integrated development environment (IDE) which can be downloaded [here](https://www.rstudio.com/products/rstudio/download/#download). It is also possible to run R and Rstudio virtually through the cloud through RStudio-cloud. This can be accomplished by going [here](https://rstudio.cloud/). One very nice feature of RStudio-cloud is that it has a number of tutorials to help learn to use R listed under the primers tab.
-
 ## Class Resources
+
+For this course, we will use the [R](https://www.r-project.org/) language. R can be downloaded for free [here](https://cran.revolutionanalytics.com/). In addition, we will use the [RStudio](https://www.rstudio.com/) integrated development environment (IDE) which can be downloaded [here](https://www.rstudio.com/products/rstudio/download/#download). It is also possible to run R and Rstudio virtually through the cloud through RStudio-cloud. This can be accomplished by going [here](https://rstudio.cloud/). One very nice feature of RStudio-cloud is that it has a number of tutorials to help learn to use R listed under the primers tab.
 
 ### R for Data Science and Other Books
 A valuable reference for the course is the text *R for Data Science* by Grolemund and Wickham. An online version of this text can be found [here](http://r4ds.had.co.nz/).
