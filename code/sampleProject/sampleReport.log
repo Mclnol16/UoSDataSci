@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  13 AUG 2018 12:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  13 AUG 2018 12:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -290,27 +290,30 @@ Overfull \hbox (15.0pt too wide) in paragraph at lines 151--152
 [][] 
  []
 
-[2] (./sampleReport.bbl) [3 <./figure/unnamed-chunk-5-1.pdf>]
+[2] (./sampleReport.bbl [3 <./figure/unnamed-chunk-5-1.pdf>]) [4]
 (./sampleReport.aux) ) 
 Here is how much of TeX's memory you used:
- 2868 strings out of 493014
- 38012 string characters out of 6133351
+ 2878 strings out of 493014
+ 38118 string characters out of 6133351
  103364 words of memory out of 5000000
- 6357 multiletter control sequences out of 15000+600000
- 9703 words of font info for 37 fonts, out of 8000000 for 9000
+ 6365 multiletter control sequences out of 15000+600000
+ 11402 words of font info for 45 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  38i,7n,24p,290b,247s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2016/texmf-dist/fonts/type1/public/am
 sfonts/cm/cmbx12.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmr10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmr12.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmr17.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmti10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmtt10.pfb>
-Output written on sampleReport.pdf (3 pages, 131865 bytes).
+fonts/cm/cmex10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmmi10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmr10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmr12.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmr17.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmr7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+ti10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmt
+t10.pfb>
+Output written on sampleReport.pdf (4 pages, 159182 bytes).
 PDF statistics:
- 45 PDF objects out of 1000 (max. 8388607)
- 30 compressed objects within 1 object stream
+ 60 PDF objects out of 1000 (max. 8388607)
+ 41 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  11 words of extra memory for PDF output out of 10000 (max. 10000000)
 
