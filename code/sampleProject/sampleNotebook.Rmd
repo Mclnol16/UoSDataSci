@@ -1,0 +1,44 @@
+---
+title: "Sample R Notebook"
+output: html_notebook
+---
+
+# Sample Notebook
+
+## Section 1
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r}
+library(tidyverse)
+```
+
+Now the tidyverse suite of packages should be loaded and their various functions ready for use.
+
+## Section 2
+
+Let's import some data.
+```{r}
+df <- read_csv("Data/sampleData.csv")
+```
+
+We can see the first five rows of the data frame.
+```{r}
+head(df,5)
+```
+
+Let's make a plot using our data frame. We will create a bar plot the total number per each color. 
+```{r}
+ggplot(data=df,mapping = aes(x=color,y=total.number)) + geom_bar(stat="identity")
+```
+
+## Some common notebook commands
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+

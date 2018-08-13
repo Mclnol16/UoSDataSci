@@ -1,0 +1,63 @@
+\documentclass{article}
+%\usepackage[utf8]{inputenc}
+
+\title{Title}
+\author{Author Name}
+\date{Date}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{natbib}
+\usepackage{graphicx}
+
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+There is a theory which states that if ever anyone discovers exactly what the Universe is for and why it is here, it will instantly disappear and be replaced by something even more bizarre and inexplicable.
+There is another theory which states that this has already happened.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=1.7]{universe}
+\caption{The Universe}
+\label{fig:universe}
+\end{figure}
+
+\section{Using R Code}
+
+We should load all of the libraries that we will use. 
+<<message=FALSE,warning=FALSE>>=
+library(tidyverse)
+@
+
+Now with our libraries loaded we can use their functions. Let's import some data and produce a plot. 
+<<message=FALSE>>=
+df <- read_csv("Data/sampleData.csv")
+@
+
+Before we make a plot, we should take a brief look at our data and perhaps compute some very simple descriptive statistics. 
+
+Here are the first five rows of our data:
+<<>>=
+head(df,5)
+@
+
+We can get a simple summary of our data:
+<<>>=
+summary(df)
+@
+
+Now let's create a bar plot:
+<<>>=
+ggplot(data=df,mapping = aes(x=color,y=total.number)) + 
+  geom_bar(stat="identity")
+@
+
+\section{Conclusion}
+``I always thought something was fundamentally wrong with the universe'' \citep{adams1995hitchhiker}
+
+\bibliographystyle{plain}
+\bibliography{references}
+\end{document}
