@@ -7,8 +7,14 @@
 library(tidyverse)
 library(reshape2)
 
+# Set working directory 
+cwd <- setwd("~/Documents/UoSDataSci/code")
+
+# Set data location 
+dwd <- paste(cwd,"/Data/Salaries.csv",sep="")
+
 # Load the data
-salary_df <- read_csv("/Users/grahamj7/data/Salaries.csv")
+salary_df <- read_csv(dwd)
 
 # Take a look at the first few rows
 head(salary_df)
