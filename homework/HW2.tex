@@ -36,12 +36,12 @@
     \item   Read the Structured Data handout and the first few sections through \emph{Visualising distributions} of \emph{R for Data Science}. 
     \item Find a data set or data sets that exemplify each of the terms: rectangular or tabular data, continuous, discrete, categorical, binary, ordinal.
     \item Explain why it is important to have a taxonomy of data types. 
-    \item True or False: The {\tt diamonds} data set in the {\tt ggplot2} package is a data frame. One way to answer this question is by typing the command {\tt str(diamonds)} in R. 
+    \item True or False: The {\tt diamonds} data set in the {\tt ggplot2} package is a data frame. One way to answer this question is by typing the command {\tt str(diamonds)} in R\footnote{If you want to look at the {\tt diamonds} data set, make sure you have the {\tt ggplot2} package installed and loaded.}. 
     \item True or False: The {\tt diamonds} data set in the {\tt ggplot2} package is ``tidy.''
     \item How many variables are there in the {\tt diamonds} data set?
     \item Classify each of the variables in the {\tt diamonds} data set. That is, state if the variable is continuous, discrete, categorical, etc. 
     \item Describe the difference between a bar plot and a histogram. Under what circumstances would you use each? 
-    \item Explain the result of the command 
+    \item Explain the result of the command
     \begin{verbatim}
       ggplot(data = mpg) + geom_bar(mapping = aes(x=class))
     \end{verbatim}
@@ -51,9 +51,9 @@
            \includegraphics[scale=0.4]{exampleBar.pdf}
         \end{center}
     \end{figure}
-    
+  
  Make sure to answer the question in the context of the data. 
-  \item Explain the result of the command 
+  \item Explain the result of the command
     \begin{verbatim}
       ggplot(data = mpg) + geom_histogram(mapping = aes(x=displ),binwidth=0.4)
     \end{verbatim}
@@ -65,5 +65,11 @@
     \end{figure}
     
  Make sure to answer the question in the context of the data. 
+ 
+ \item Explain the meaning of the results obtained after running the R command\footnote{Make sure you have the {\tt ggplot2} package installed and loaded.}
+     \begin{verbatim}
+         summary(mpg)
+     \end{verbatim}
+     What information does this tell you about the {\tt mpg} data set? 
   \end{enumerate}
 \end{document}
