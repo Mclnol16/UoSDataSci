@@ -23,6 +23,26 @@ glimpse(gapminder)
 
 glimpse(mpg)
 
+# we can look at subsets of a data frame
+# e.g.
+# a row
+gapminder[1, ]
+
+# a column 
+gapminder[ ,1]
+# or
+gapminder$country
+# although this prints out in a slightly different format
+
+# multiple subrows and columns
+gapminder[1:3,2:4]
+
+# later we will see more sophisticated ways of doing this!
+
+# we can even "view" the whole thing
+View(gapminder)
+
+
 
 # for numeric variables it makes sense to compute numerical summaries
 gapminder$lifeExp %>% unlist() %>% mean() # mean life expectency
