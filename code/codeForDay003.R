@@ -39,7 +39,7 @@ head(gapminder)
 summary(gapminder)
 
 # looking at the summary stats for individual variables may be misleading
-# and out of appropriate context For example looking at life expectancy
+# and out of appropriate context, for example looking at life expectancy
 # across the entire globe misses many nuances
 
 # let's look at life expectancy across a single continent, say Africa 
