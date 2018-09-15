@@ -126,10 +126,23 @@ df_bmi <- my_bmi(mass_height_df$mass,mass_height_df$height)
 mean(df_bmi)
 
 # or can use some real data
+df <- read.csv("https://raw.githubusercontent.com/jmgraham30/UoSDataSci/master/code/mlb_data.csv")
 
+head(df)
 
-# what we will see later is that it is very easy to apply a function
-# like this to every row of a data frame and then record the result as a new column
+player_bmi <- my_bmi(df$Weight,df$Height)
+
+mean(player_bmi)
+
+# this bmi for players can be used to answer a data science question
+# do player get out of shape with age?
+ggplot(data=NULL,mapping=aes(x=df$Age,y=player_bmi)) + geom_point()
+# based on the graph, do older players have a higher bmi? 
+# might need a sophisticated model to tell
+
+# it would be nice if we added the bmi values to the data 
+# we will see later is that it is very easy to apply a function like this
+# to every row of a data frame and then record the result as a new column
 
 
 
