@@ -57,5 +57,20 @@
       \item Describe $Z$-scores and normalization.       
     \end{enumerate}
     \item Find or make up a formula for some kind of score. Write an R function that implements your formula. Apply your function to some data that is either real or simulated.  Discuss whether your scoring function is good or not.  
+    \item Using the {\tt flights} data form the {\tt nycflights13} package,  find all flights that
+    \begin{enumerate}
+      \item Had an arrival delay of two or more hours
+      \item Flew to Houston (IAH or HOU)
+      \item Were operated by United, American, or Delta
+      \item Departed in summer (July, August, and September)
+      \item Arrived more than two hours late, but didn?t leave late
+      \item Were delayed by at least an hour, but made up over 30 minutes in flight
+      \item Departed between midnight and 6am (inclusive)
+    \end{enumerate}
+    \item Another useful {\tt dplyr} filtering helper is {\tt between()}. What does it do? Can you use it to simplify the code needed to answer the previous challenges?
+    \item How many flights have a missing dep\_time? What other variables are missing? What might these rows represent?
+    \item How could you use arrange() to sort all missing values to the start? (Hint: use is.na()).
+    \item Sort {\tt flights} to find the most delayed flights. Find the flights that left earliest.
+    \item Sort {\tt flights} to find the fastest flights.
   \end{enumerate}
 \end{document}
