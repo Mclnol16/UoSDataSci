@@ -44,6 +44,69 @@ nov_dec2 <- filter(flights, month %in% c(11, 12))
 # we can check that these are the same:
 identical(nov_dec,nov_dec2)
 
-# we do have to be careful about missing values:
+# we do have to be careful about missing values 
+# because almost any operation involving an unknown value will also be unknown
+# for example
+2 == NA
+# produces NA
+# a better way is to use the is.na function
+x <- NA
+is.na(2)
+is.na(x)
 
+# now consider this example
+df <- tibble(x = c(1, NA, 3))
+filter(df, x > 1) # will not keep row with NA
+# but this will
+filter(df, is.na(x) | x > 1)
+
+
+# one very clever aspect to dplyr is the pipe operator
+# for example, suppose we want to plot the number of different
+# carriers with flights on Jan 1 2013
+ggplot(data=filter(flights,month==1,day==1),mapping = aes(x=carrier)) + geom_bar()
+# alternatively
+flights %>% filter(month==1,day==1) %>% ggplot(mapping = aes(x=carrier)) + geom_bar()
+# the pipe %>% chains together multiple functions
+
+# arrange() works similarly to filter() except that instead of selecting rows, 
+# it changes their order.
+head(diamonds)
+
+arrange(diamonds,carat)
+# or 
+diamonds %>% arrange(carat)
+
+# we can do it in descending order
+diamonds %>% arrange(desc(carat))
+# or order according to more than one variable
+diamonds %>% arrange(carat,table)
+
+# Missing values are always sorted at the end:
+df <- tibble(x = c(5, 2, NA))
+arrange(df, x)
+
+# while filter subsets by rows, select subsets by column
+# for example
+head(diamonds)
+
+diamonds %>% select(carat,price)
+# alternatively
+diamonds %>% select(c(carat,price))
+
+# you can select a range of columns
+diamonds %>% select(color:price)
+
+# or leave out a column
+diamonds %>% select(-table)
+
+# notice that none of the dplyr functions change the original data frame
+
+
+# there are some clever helper functions that can be used with select:
+diamonds %>% select(starts_with('c'))
+
+diamonds %>% select(ends_with('e'))
+
+diamonds %>% select(contains('l'))
 
