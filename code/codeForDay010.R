@@ -102,6 +102,13 @@ diamonds %>% select(-table)
 
 # notice that none of the dplyr functions change the original data frame
 
+# notice that select places columns in the order they are given:
+diamonds %>% select(table, carat, price)
+# versus
+diamonds %>% select(price, table, carat)
+
+# an application of select is if you want to place certain variables in the first few columns
+flights %>% select(distance, air_time, everything())
 
 # there are some clever helper functions that can be used with select:
 diamonds %>% select(starts_with('c'))
