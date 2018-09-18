@@ -56,6 +56,20 @@
       \item What are the characteristics of a good scoring function? 
       \item Describe $Z$-scores and normalization.       
     \end{enumerate}
+    \item A (simplified version of a) common scoring function for batters in baseball is the on base percentage (OBP) which is defined as
+    \[  OBP = \frac{\text{H} + \text{W}}{\text{AB}}, \]
+    where  H is the number of hits for a player, W is the number of walks a player receives, and AB is the number of at bats for a player. 
+    \begin{enumerate}
+      \item Write a function in R that inputs the number of hits for a player, the number of walks a player receives, and the number of at bats for a player; and then computes the on base percentage. 
+      \item Simulate values for H, W, and AB for a season and then use your function to compute OBP for the season. You can use the following code to simulate the values for the season:
+      \begin{verbatim}
+          AB <- sample(64800:105300,270,replace=TRUE)
+          H <- sample(162:16200,270,replace=TRUE)
+          W <- sample(162:1782,270,replace=TRUE)
+      \end{verbatim}
+      What does the {\tt sample} function do? Read the documentation and describe it. 
+      \item Use the result of your calculation of OBP based on the simulated  data and report the mean OBP. 
+    \end{enumerate}   
     \item Find or make up a formula for some kind of score. Write an R function that implements your formula. Apply your function to some data that is either real or simulated.  Discuss whether your scoring function is good or not.  
     \item Using the {\tt flights} data form the {\tt nycflights13} package,  find all flights that
     \begin{enumerate}
