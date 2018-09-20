@@ -1,4 +1,5 @@
 library(nycflights13)
+library(gapminder)
 library(tidyverse)
 # tidyverse contains dplyr which is what we will mainly use
 
@@ -92,4 +93,53 @@ p1 <- motion_df %>% ggplot() + geom_line(mapping = aes(x=time,y=position))
 p2 <- motion_df %>% ggplot() + geom_line(mapping = aes(x=time,y=speed))
 grid.arrange(p1,p2,nrow=1)
 
+# the next useful data tranformation function from dplyr is summarise
+
+# summarise will collapse a data frame into a single row, e.g.
+summarise(gapminder,mean(lifeExp))
+# or
+summarise(mpg,median(hwy))
+# or
+summarise(flights, delay = mean(dep_delay, na.rm = TRUE))
+
+# here's a question: how meaningful is the mean life expectency in gapminder
+# or the median highway mpg in the mpg data? 
+# what could be misleading about such a calculation?
+
+# if variables belong to different classes, then it may be more meaningful to 
+# calculate mean, median, etc. "classwise"
+# this is where the group_by function is very useful
+
+# e.g.
+by_continent <- group_by(gapminder,continent)
+# or
+by_year_continent <- group_by(gapminder,year,continent)
+
+# now let's compute the mean of the lifeExp on each of these
+summarise(by_continent,mean(lifeExp))
+# or 
+summarise(by_year_continent,mean(lifeExp))
+
+# there are many other functions that are useful to use to summarise after grouping
+# let's go through some such examples
+
+# one very useful function is count
+# Whenever you do any aggregation, it’s always a good idea to include either a 
+# count (n()), or a count of non-missing values (sum(!is.na(x))).
+gapminder %>% group_by(country) %>% summarise(n=n())
+# which counts the number of times each country appears
+
+# now we can use this to find the number of times a country has mean lifeExp > 66
+gapminder %>% filter(lifeExp > 66) %>% group_by(country) %>% summarise(n=n())
+
+
+# some other useful summary functions: 
+# sd(x), IQR(x), mad(x), min(x), quantile(x, 0.25), max(x), first(x), nth(x, 2), last(x)
+# sum(x), n_distinct(x)
+
+# here one other example
+gapminder %>% group_by(year) %>% summarise(n_distinct(country))
+
+# Exercise 
+# find an application for one or more of the summary functions
 
