@@ -1,0 +1,53 @@
+\documentclass[12pt]{article}
+\textwidth=7in
+\textheight=9.5in
+\topmargin=-1in
+\headheight=0in
+\headsep=.5in
+\hoffset  -.85in
+
+\pagestyle{empty}
+
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{url}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\begin{document}
+
+\begin{center}
+{\bf Introduction to Data Science \\ Homework 5: Due Wednesday October 3 at 2:00pm}
+\end{center}
+
+\setlength{\unitlength}{1in}
+
+\begin{picture}(6,.1)
+\put(0,0) {\line(1,0){6.5}}
+\end{picture}
+
+\renewcommand{\arraystretch}{2}
+
+\vskip.25in
+
+\noindent{\bf  {\Large Exercises:} }
+
+\vskip.25in
+  \begin{enumerate}
+    \item   Using an appropriate choice of functions in the {\tt dplyr} package, modify the {\tt Salaries.csv} dataset to create a new variable called {\tt hp\_df} that is a data.frame that contains the highest paid player on each team in each year. 
+    \item In the {\tt flights} dataset, currently {\tt dep\_time} and {\tt sched\_dep\_time} are convenient to look at, but hard to compute with because they're not really continuous numbers. Convert them to a more convenient representation of number of minutes since midnight. Use {\tt mutate} to add this as a new column. 
+    \item What trigonometric functions does R provide? Make plots of each of the trigonometric functions over an appropriate period. 
+    \item Brainstorm at least 5 different ways to assess the typical delay characteristics of a group of flights. Consider the following scenarios:
+       \begin{itemize}
+           \item A flight is 15 minutes early 50\% of the time, and 15 minutes late 50\% of the time.
+
+           \item A flight is always 10 minutes late.
+
+            \item A flight is 30 minutes early 50\% of the time, and 30 minutes late 50\% of the time.
+
+          \item 99\% of the time a flight is on time. 1\% of the time it's 2 hours late.
+       \end{itemize}
+Which is more important: arrival delay or departure delay? 
+\item Read the R Markdown chapter of R for Data Science. (This is chapter 27 of the online version). Use what you learn to create the beginning of a notebook for your semester project. Start with a section titled ``Problem Description and Objectives,'' once you have written it, copy and paste the  background, problem description, and objective into this section. Also include a section titled ``Data Description,'' and copy and paste the data description that you already submitted into this section of your notebook.  
+\item Create an R Project and corresponding folder (directory) that contains the notebook you just created, and also a subfolder called Data that contains any data files that you have obtained for your semester project.  
+\item {\bf Optional:} If you want to use git or github to maintain your project files (highly recommended), see Dr.\ Graham if you want help with this.   
+  \end{enumerate}
+\end{document}
