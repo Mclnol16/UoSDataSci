@@ -1,0 +1,82 @@
+---
+title: "R Notebook on Baseball Salaries Data"
+output: html_notebook
+---
+
+
+
+# Introduction and Data Summary 
+
+In this notebook we will carry out some analyses on the dataset Salaries.csv. 
+
+We begin ny loading the libraries we will use and importing the appropriate libraries. Namely, we load the tidyverse and reshape2 packages. 
+```{r}
+library(tidyverse)
+library(reshape2)
+```
+Next, import the data.
+```{r}
+salary_df <- read_csv("Data/Salaries.csv")
+```
+We should determine the size and column names of the dataframe. 
+```{r}
+dim(salary_df)
+names(salary_df)
+```
+
+Then examine the first few and last few rows of the data.
+
+```{r}
+head(salary_df)
+```
+```{r}
+tail(salary_df)
+```
+
+We can quickly obtain some summary statistics.
+```{r}
+summary(salary_df)
+```
+This tells us some useful information. First, we see the class of the five variables. Second, there is no missing data becuase otherwise this would have been indicated by the output from the summary function. In addition, we get the five mean and quantiles for the two numeric variables yearID and salary. 
+
+What information does this dataset seem to contain? 
+
+# Some Initial Plots
+
+```{r}
+salary_df %>% ggplot() + geom_bar(mapping = aes(x=teamID)) + coord_flip()
+```
+
+This shows how many observations there are for each of the 37 different teams. Notice that one way to determine how many distinct teams there are is to use the following command.
+```{r}
+salary_df$teamID %>% unique() %>% length()
+```
+
+# Examine Salaries by Year
+
+```{r}
+avg_sal_by_year <- salary_df %>% group_by(yearID) %>% summarize(avg_sal = mean(salary))
+```
+Let's take a look.
+```{r}
+head(avg_sal_by_year)
+```
+
+
+We can kind of check this. For example keep only data with year 1985 and compute mean
+```{r}
+salary_df %>% filter(yearID == 1985) %>% select(salary) %>% unlist() %>% mean()
+```
+This agrees with what we saw in the first row for avg_sal_by_year. 
+
+Now let's plot the mean salary over time.
+```{r}
+avg_sal_by_year %>% ggplot(mapping = aes(x=yearID,y=avg_sal)) + geom_line()
+```
+
+What does this plot suggest? 
+
+# A Deeper Analysis 
+
+
+
