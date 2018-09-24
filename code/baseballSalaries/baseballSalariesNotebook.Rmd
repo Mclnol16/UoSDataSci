@@ -78,5 +78,154 @@ What does this plot suggest?
 
 # A Deeper Analysis 
 
+We should be careful regarding outliers so let's look at the median too.
+```{r}
+sal_stats_by_year <- salary_df %>% 
+  group_by(yearID) %>% 
+  summarize(avg_sal = mean(salary), med_sal = median(salary))
+```
+
+We can plot both mean and median salaries over time but first we have to convert data to long format.
+```{r}
+sal_stats_by_year %>% 
+  melt(id="yearID") %>%
+  ggplot(mapping=aes(x=yearID, y=value, colour=variable)) +
+  geom_line()
+```
+
+What can you conclude? 
+
+It is easy to look at the salary distributions by team.
+```{r}
+salary_df %>% ggplot(mapping = aes(x=salary)) + geom_histogram() + facet_wrap(~ teamID)
+```
+
+Let's write a function that plots the salary distribution for input year and team
+```{r}
+team_year_sal <- function(yearID_val,teamID_val){
+  salary_df %>% filter(teamID==teamID_val,yearID == yearID_val) %>%
+    ggplot(mapping = aes(x=salary)) + 
+    geom_histogram() + 
+    ggtitle(paste(as.character(yearID_val),teamID_val,sep=" "))
+}
+```
+
+
+Example using the function.
+```{r}
+team_year_sal(2014,"TEX")
+```
+
+
+Let's do something similar but produce a boxplot instead.
+```{r}
+team_year_sal_box <- function(yearID_val,teamID_val){
+  salary_df %>% filter(teamID==teamID_val,yearID == yearID_val) %>%
+    ggplot(mapping = aes(y=salary)) + 
+    geom_boxplot() + 
+    ggtitle(paste(as.character(yearID_val),teamID_val,sep=" "))
+}
+```
+
+Example using the function
+```{r}
+team_year_sal_box(2014,"TEX")
+```
+
+
+Perhaps we can see the boxplots across all teams for a given year
+```{r}
+year_sal_box <- function(yearID_val){
+  salary_df %>% filter(yearID == yearID_val) %>%
+    ggplot(mapping = aes(x=teamID,y=salary)) + 
+    geom_boxplot() + 
+    coord_flip() + 
+    ggtitle(as.character(yearID_val))
+}
+```
+
+
+Example using the function 
+```{r}
+year_sal_box(2014)
+```
+
+What can we see based on this? 
+
+
+Let's find the total salary amount per team per year.
+```{r}
+tot_sal <- salary_df %>% group_by(yearID,teamID) %>% summarise(total_salary=sum(salary))
+```
+
+Take a look at result. 
+```{r}
+head(tot_sal)
+```
+
+Let's determine for each year which team spent the most:
+```{r}
+# First we find the max total salaries by year
+tot_max <- tot_sal %>% group_by(yearID) %>% summarise(max_sal=max(total_salary))
+# Then convert the max total salary values into a vector
+max_vals <- tot_max$max_sal %>% unlist()
+# Then pull out the rows where the max total salaries occur
+high_price_teams <- tot_sal %>% filter(total_salary %in% max_vals)
+```
+
+Let's look.
+```{r}
+head(high_price_teams)
+```
+
+What does the previous result tell us? 
+
+
+There's only 30 rows and 3 columns so we can look at the entire result.
+```{r}
+View(high_price_teams)
+```
+
+Let's plot the maximum total salaries over time.
+```{r}
+high_price_teams %>% 
+  ggplot() + 
+  geom_point(mapping = aes(x=yearID,y=total_salary,color=teamID)) 
+```
+
+It could be useful to fit a curve through the data.
+```{r}
+high_price_teams %>% 
+  ggplot() + 
+  geom_point(mapping = aes(x=yearID,y=total_salary,color=teamID)) + 
+  geom_smooth(mapping = aes(y=total_salary, x=yearID))
+```
+
+It would be interesting to know the playoff and world series results for these high salary teams. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
