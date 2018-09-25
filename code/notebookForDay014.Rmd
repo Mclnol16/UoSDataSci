@@ -31,6 +31,117 @@ library(fastR2)
 
 The **distribution** of a variable in a dataset is the set of possible values that the variable takes on together with the frequency with which each value occurs for that variable. Visualizing the distribution of a variable is an extremely valuable thing to do. The way that a distribution is visualized depends largely on whether the variable is categorical or continuous. If the variable is categorical, a barplot can be used to visualize its distribution. On the other hand, if the variable if continuous a histogram is appropriate but there are also other types of plots that are useful as well. 
 
+
+How you visualise the distribution of a variable will depend on whether the variable is categorical or continuous. A variable is categorical if it can only take one of a small set of values. In R, categorical variables are usually saved as factors or character vectors. To examine the distribution of a categorical variable, use a bar chart:
+```{r}
+ggplot(data = diamonds) +
+  geom_bar(mapping = aes(x = cut))
+```
+
+or as another example we can apply this to the baseball salaries dataset. 
+```{r,results="hide",warning=FALSE}
+url <- "https://raw.githubusercontent.com/jmgraham30/UoSDataSci/master/code/baseballSalaries/Data/Salaries.csv"
+bbs_df <- read.csv(url)
+```
+
+
+```{r}
+head(bbs_df)
+```
+
+
+
+
+```{r}
+ggplot(data = bbs_df) +
+  geom_bar(mapping = aes(x = lgID))
+```
+
+
+The height of the bars displays how many observations occurred with each x value. You can compute these values manually with dplyr::count():
+```{r}
+diamonds %>% 
+  count(cut)
+```
+
+Notice that this is equivalent to
+```{r}
+diamonds %>% group_by(cut) %>% summarise(n=n())
+```
+
+A benefit to using the count function is that it is easier to handle multiple variables, e.g.
+```{r}
+diamonds %>% count(cut,color)
+```
+
+To examine the distribution of a continuous variable, use a histogram:
+```{r}
+ggplot(data = diamonds) +
+  geom_histogram(mapping = aes(x = carat), binwidth = 0.5)
+```
+
+
+You can compute this by hand by combining dplyr::count() and ggplot2::cut_width():
+```{r}
+diamonds %>% 
+  count(cut_width(carat, 0.5))
+```
+
+Notice that it is somewhat difficult to get a nice histogram for the baseball salaries data due to extreme outliers at both ends.
+```{r}
+bbs_df %>% ggplot() + geom_histogram(mapping = aes(x=salary))
+```
+Even if we change the binwidths its difficult to get an accurate representation of the variation in the salaries. We should really have bins of unequal length. 
+
+Consider instead the following binning and count for the baseball salaries:
+```{r}
+bbs_df %>% count(cut(salary,c(-1,10000,50000,100000,500000,1000000,5000000,10000000,500000000,100000000) ))
+```
+Which can be plotted as
+```{r}
+salary_bin <- bbs_df %>% 
+  count(cut(salary,c(-1,10000,50000,100000,500000,1000000,5000000,10000000,500000000,100000000) ))
+names(salary_bin) <- c("bin_interval","count_value")
+salary_bin %>% ggplot() + geom_bar(mapping = aes(x=bin_interval,y=count_value),stat="identity") + 
+  coord_flip()
+```
+
+Another option is to plot a histogram of the salaries using a log scale. 
+```{r}
+bbs_df %>% ggplot() + geom_histogram(mapping = aes(x=log10(salary)))
+```
+
+
+What has happened? Some have been removed, perhaps we should do this in advance. Also, it's a good idea to play with the number of bins. 
+```{r}
+bbs_df %>% filter(salary > 0) %>% ggplot() + geom_histogram(mapping = aes(x=log10(salary)),bins=100)
+```
+
+
+One may want to see histograms seperated by values for a categorical variable. One of the better ways to do this is to use geom_freqpoly() instead of geom_histogram(). For example, 
+```{r}
+ggplot(data = diamonds, mapping = aes(x = carat, colour = cut)) +
+  geom_freqpoly(binwidth = 0.1)
+```
+
+Another example of this could be,
+```{r}
+bbs_df %>% filter(salary > 0) %>% ggplot(mapping = aes(x = log(salary), colour = teamID)) +
+  geom_freqpoly(binwidth = 0.1)
+```
+This is probably too many so we can break it up first into league and then team. 
+```{r}
+bbs_df %>% filter(salary > 0, lgID == "AL") %>% ggplot(mapping = aes(x = log(salary), colour = teamID)) +
+  geom_freqpoly(binwidth = 0.1)
+```
+
+```{r}
+bbs_df %>% filter(salary > 0, lgID == "NL") %>% ggplot(mapping = aes(x = log(salary), colour = teamID)) +
+  geom_freqpoly(binwidth = 0.1)
+```
+
+
+
 # Missing Values
 
 
