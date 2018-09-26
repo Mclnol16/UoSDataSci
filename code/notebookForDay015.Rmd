@@ -1,0 +1,22 @@
+---
+title: "Exlporatory Data Analysis Continued"
+output:
+  html_notebook: default
+  pdf_document: default
+---
+
+```{r, results="hide", warning=FALSE}
+library(tidyverse)
+library(fastR2)
+```
+
+
+Often, a variable either follows or can be approximated by a known distribution. 
+
+
+
+
+# Missing Values
+
+
+# Relationship Between Variables
