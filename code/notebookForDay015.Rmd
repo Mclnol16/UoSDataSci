@@ -5,14 +5,66 @@ output:
   pdf_document: default
 ---
 
-```{r, results="hide", warning=FALSE}
+```{r, results="hide",message=FALSE,warning=FALSE}
 library(tidyverse)
+library(qqplotr)
 library(fastR2)
+library(gapminder)
 ```
 
 
-Often, a variable either follows or can be approximated by a known distribution. 
+Often, a variable either follows or can be approximated by a known theoretical distribution. For example, the data may follow or be well-approximated by a normal distribution. Consider the following:
+```{r,message=FALSE, warning=FALSE}
+df <- data.frame(height=rnorm(234,mean=66,6))
+df <- df %>% mutate(height_ft = height/12)
+df %>% ggplot(mapping = aes(x=height_ft)) + geom_histogram()
+```
 
+Let's convert this to a density. 
+```{r}
+df %>% ggplot(mapping = aes(x=height_ft)) + geom_histogram(aes(y =..density..))
+```
+
+We can compute the mean and standard deviation and then overlay a plot of the corresponding normal distribution for comparison. 
+```{r}
+df %>% ggplot(mapping = aes(x=height_ft)) + geom_histogram(aes(y =..density..)) + 
+  stat_function(fun = dnorm, args = list(mean = mean(df$height_ft), sd = sd(df$height_ft)),color="blue",lwd=1)
+```
+What do you think? Notice that we used the sample mean and standard deviation to obtain the curve. Since we know the population mean and standard deviation, let's try it with those as well. 
+
+```{r}
+df %>% ggplot(mapping = aes(x=height_ft)) + geom_histogram(aes(y =..density..)) + 
+  stat_function(fun = dnorm, args = list(mean = 66/12, sd = 6/12),color="blue",lwd=1)
+```
+Pretty close which makes sense becuase we sampled from that specific distribution. 
+
+
+
+Another approach to determine if a variable follows a theoretical distribution is by using a so-called quantile-quantile plot. For example. 
+```{r}
+# requires qqplotr package
+ggplot(data = df, mapping = aes(sample = height_ft)) +
+    stat_qq_band() +
+    stat_qq_line() +
+    stat_qq_point() +
+    labs(x = "Theoretical Quantiles", y = "Sample Quantiles")
+```
+
+Let's apply this to a different data set. 
+```{r}
+ggplot(data = gapminder, mapping = aes(sample = gdpPercap)) +
+    stat_qq_band() +
+    stat_qq_line() +
+    stat_qq_point() +
+    labs(x = "Theoretical Quantiles", y = "Sample Quantiles")
+```
+
+Now plot the histogram.
+```{r}
+gapminder %>% ggplot(mapping=aes(x=gdpPercap)) + geom_histogram(aes(y =..density..))
+```
+
+Definitely does not follow a normal distribution. This is very positively skewed. 
 
 
 

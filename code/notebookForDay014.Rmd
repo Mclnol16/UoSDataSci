@@ -143,4 +143,4 @@ bbs_df %>% filter(salary > 0, lgID == "NL") %>% ggplot(mapping = aes(x = log(sal
   geom_freqpoly(binwidth = 0.1)
 ```
 
-Often, a variable either follows or can be approximated by a known distribution. We will pick up here next time and then go on to consider missing values and covariation. 
+Often, a variable either follows or can be approximated by a known theoretical distribution. We will pick up here next time and then go on to consider missing values and covariation. 
