@@ -42,6 +42,24 @@ Pretty close which makes sense becuase we sampled from that specific distributio
 
 Another approach to determine if a variable follows a theoretical distribution is by using a so-called quantile-quantile plot. For example. 
 ```{r}
+df %>% ggplot( ) + geom_qq(mapping=aes(sample = height_ft))
+```
+For a large sample from the theoretical distribution the plot should be a straight line through the origin with slope=standard deviation and intercept = mean. To see if this is the case we can overlay the line.
+```{r}
+df %>% ggplot( ) + geom_qq(mapping=aes(sample = height_ft)) + 
+  geom_abline(slope = 6/12,intercept = 66/12,color="red") 
+```
+Since we sampled from a distribution to obtain the data, we know the population mean and standard deviation. What if we use the sample mean and standard deviation?
+```{r}
+df %>% ggplot( ) + geom_qq(mapping=aes(sample = height_ft)) + 
+  geom_abline(slope = 6/12,intercept = 66/12,color="red") + 
+  geom_abline(slope = sd(df$height_ft),intercept = mean(df$height_ft),color="blue")
+```
+The lines are slightly off but still close because in this case the sample mean and sd are good approximations to the population mean and sd. 
+
+
+The package qqplotr allows us to add more information such as confidence intervals. For example. 
+```{r}
 # requires qqplotr package
 ggplot(data = df, mapping = aes(sample = height_ft)) +
     stat_qq_band() +
