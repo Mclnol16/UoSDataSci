@@ -83,10 +83,34 @@ gapminder %>% ggplot(mapping=aes(x=gdpPercap)) + geom_histogram(aes(y =..density
 ```
 
 Definitely does not follow a normal distribution. This is very positively skewed. 
+One last note for now on the normal distribution. One can rescale in order to compare with the *standard normal distribution* which has mean=0 and sd=1. In order to do this, simply subtract the mean from all of the variable values and divide by the sd. We can add this normalized version of a variable to the data frame using mutate and then construct the corresponding qqplot. For example:
+```{r}
+df <- df %>% mutate(height_normalized = (height - mean(height))/sd(height))
+df %>% ggplot( ) + geom_qq(mapping=aes(sample = height_normalized)) + 
+  geom_abline(slope = 1,intercept = 0,color="red") 
+```
+or with confidence intervals:
+```{r}
+# requires qqplotr package
+ggplot(data = df, mapping = aes(sample = height_normalized)) +
+    stat_qq_band() +
+    stat_qq_line() +
+    stat_qq_point() +
+    labs(x = "Theoretical Quantiles", y = "Sample Quantiles")
+```
+
+**Exercise**: Do this same thing for the gapminder variable gdpPerCap. 
 
 
 
 # Missing Values
+
+If your data contains questionable values (note that you have to carefully determine what constitutes a questionable value and you should be as transparent as possible about how you do this) for one of more variables, you essentially have two options:
+
+1. Remove the observations (rows) that contain the questionable values. 
+
+2. Replace the questionable values with NA. This is the preferred appraoch. 
+
 
 
 # Relationship Between Variables
