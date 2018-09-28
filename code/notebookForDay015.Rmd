@@ -105,11 +105,17 @@ ggplot(data = df, mapping = aes(sample = height_normalized)) +
 
 # Missing Values
 
-If your data contains questionable values (note that you have to carefully determine what constitutes a questionable value and you should be as transparent as possible about how you do this) for one of more variables, you essentially have two options:
+If your data contains questionable values (note that you have to carefully determine what constitutes a questionable value and you should be as transparent as possible about how you do this) for one of more variables, you essentially have three options:
 
 1. Remove the observations (rows) that contain the questionable values. 
 
-2. Replace the questionable values with NA. This is the preferred appraoch. 
+2. Replace the questionable values with NA.  
+
+3. Replace the questionable value with another value that makes more sense. 
+
+Of these, 1.generally not the best idea. In order to implement option 3. you need to have a reliable method for determining what another value that makes more sense is. This usually requires a model and will be discussed later. For now, option 2. is probably the best approach. We will discuss this now. 
+
+
 
 
 
