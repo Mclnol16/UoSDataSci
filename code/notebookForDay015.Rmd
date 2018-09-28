@@ -15,9 +15,9 @@ library(gapminder)
 
 Often, a variable either follows or can be approximated by a known theoretical distribution. For example, the data may follow or be well-approximated by a normal distribution. Consider the following:
 ```{r,message=FALSE, warning=FALSE}
-df <- data.frame(height=rnorm(234,mean=66,6))
+df <- data.frame(height=rnorm(234,mean=66,sd=6))
 df <- df %>% mutate(height_ft = height/12)
-df %>% ggplot(mapping = aes(x=height_ft)) + geom_histogram()
+df %>% ggplot(mapping = aes(x=height_ft)) + geom_histogram(binwidth = 0.1)
 ```
 
 Let's convert this to a density. 

@@ -76,7 +76,7 @@ diamonds %>% count(cut,color)
 To examine the distribution of a continuous variable, use a histogram:
 ```{r}
 ggplot(data = diamonds) +
-  geom_histogram(mapping = aes(x = carat), binwidth = 0.5)
+  geom_histogram(mapping = aes(x = carat),binwidth=0.1)
 ```
 
 
