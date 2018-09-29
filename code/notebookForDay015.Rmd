@@ -36,7 +36,11 @@ What do you think? Notice that we used the sample mean and standard deviation to
 df %>% ggplot(mapping = aes(x=height_ft)) + geom_histogram(aes(y =..density..)) + 
   stat_function(fun = dnorm, args = list(mean = 66/12, sd = 6/12),color="blue",lwd=1)
 ```
-Pretty close which makes sense becuase we sampled from that specific distribution. 
+Pretty close which makes sense becuase we sampled from that specific distribution. Recall that the density function for the normal distribution is
+
+$f(x) = \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}$
+
+where the parameters are the mean $\mu$ and standard deviation $\sigma$. Also recall that the square of the standard deviation $\sigma^2$ is called the **variance**. 
 
 
 
@@ -115,8 +119,192 @@ If your data contains questionable values (note that you have to carefully deter
 
 Of these, 1.generally not the best idea. In order to implement option 3. you need to have a reliable method for determining what another value that makes more sense is. This usually requires a model and will be discussed later. For now, option 2. is probably the best approach. We will discuss this now. 
 
+The main question is how do we find and replace all questionable values with NA? The first point is that we should not change the original data set. To avoid doing so we will use mutate to create a modified copy. In order to do this, we can use the ifelse function to replace unusual values with NA. For example
+```{r}
+diamonds2 <- diamonds %>% 
+  mutate(y = ifelse(y < 3 | y > 20, NA, y))
+filter(diamonds2,is.na(y))
+```
+We see that there are nine rows in diamonds2 that have a y value less than three or greater than 20 and thus the values have been replaced by NA. 
+
+
+**Exercise** Use this technique to replace the questionable salary values in the baseball salaries dataset with NA. 
+
+
+There is an alternative method for obtaining all rows in a data frame that contain missing
+values. One can use the complete.cases function.
+```{r}
+filter(diamonds2,!complete.cases(diamonds2))
+```
+
+Let's look at this for another example.
+```{r}
+examp_df <- data.frame(one=c(1,2,NA,3,4,NA),two=c(NA,"Bill","Martha","Steve",NA,"Mary"))
+filter(examp_df,complete.cases(examp_df))
+filter(examp_df,!complete.cases(examp_df))
+```
+This can be very useful. 
+
+
+**Exercise** Find all the rows in the baseball salary data frame where you have replaced salary values with NA.  
+
+
+Notice what happens if we make a plot where one of the aesthetics is y. 
+```{r}
+ggplot(data = diamonds2, mapping = aes(x = x, y = y)) + 
+  geom_point()
+```
+
+Notice that ggplot informs us that missing values are present and have been excluded from the plot. 
+
+Often one would like to understand what makes observations with missing values different to observations with recorded values. For example, in nycflights13::flights, missing values in the dep_time variable indicate that the flight was cancelled. So you might want to compare the scheduled departure times for cancelled and non-cancelled times. You can do this by making a new variable with is.na().
+
+```{r}
+nycflights13::flights %>% 
+  mutate(
+    cancelled = is.na(dep_time),
+    sched_hour = sched_dep_time %/% 100,
+    sched_min = sched_dep_time %% 100,
+    sched_dep_time = sched_hour + sched_min / 60
+  ) %>% 
+  ggplot(mapping = aes(sched_dep_time)) + 
+    geom_freqpoly(mapping = aes(colour = cancelled), binwidth = 1/4)
+```
+
+
+**Exercise** What happens to missing values in a histogram? What happens to missing values in a bar chart? Why is there a difference?
+
+**Exercise** What does na.rm = TRUE do in mean() and sum()?
+
+ 
+# Relationship Between Variables (Covariation)
+
+If variation describes the behavior within a variable, covariation describes the behavior between variables. **Covariation** is the tendency for the values of two or more variables to vary together in a related way. As we hinted at before, how you visualize covariation depends on if the variables are all continuous or if some are categorical. 
+
+## Case 1: A categorical and a continuous variable
+
+Suppose we want to see how the price of a diamond varies with its quality, then one could use the following plot:
+```{r}
+ggplot(data = diamonds, mapping = aes(x = price)) + 
+  geom_freqpoly(mapping = aes(colour = cut), binwidth = 500)
+```
+
+What is the problem with this plot? What if we use density instead of count on the y-axis? 
+```{r}
+ggplot(data = diamonds, mapping = aes(x = price, y = ..density..)) + 
+  geom_freqpoly(mapping = aes(colour = cut), binwidth = 500)
+```
+What does this show that the previous plot does  not? 
+
+Another way to look at the same information is by using boxplots. For example, 
+```{r}
+ggplot(data = diamonds, mapping = aes(x = cut, y = price)) +
+  geom_boxplot()
+```
+or
+```{r}
+ggplot(data = diamonds, mapping = aes(x = cut, y = price,color=cut)) +
+  geom_boxplot()
+```
+
+How does ggplot know the order in which to place the cut categories along the x-axis? 
+```{r}
+head(diamonds)
+```
+
+Notice the cut has class <ord>. This means that it has an ordinal structure. What if a variable does not have an order for its values? Take for example 
+```{r}
+ggplot(data = mpg, mapping = aes(x = class, y = hwy)) +
+  geom_boxplot()
+```
+
+What if we want to order the values along the x-axis differently? This can be done easily with the reorder function. For example 
+```{r}
+ggplot(data = mpg) +
+  geom_boxplot(mapping = aes(x = reorder(class, hwy, FUN = median), y = hwy))
+```
+
+
+## Case 2: Two categorical variables 
+
+To visualise the covariation between categorical variables, you’ll need to count the number of observations for each combination. One way to do that is to rely on the built-in geom_count():
+```{r}
+ggplot(data = diamonds) +
+  geom_count(mapping = aes(x = cut, y = color))
+```
+
+Notice that this is a visual display for the following table. 
+```{r}
+diamonds %>% count(cut,color)
+```
+
+We can actually use this to construct another type of plot:
+```{r}
+diamonds %>% 
+  count(color, cut) %>%  
+  ggplot(mapping = aes(x = color, y = cut)) +
+    geom_tile(mapping = aes(fill = n))
+```
+or
+```{r}
+diamonds %>% 
+  count(color, cut) %>%  
+  ggplot(mapping = aes(x = color, y = cut)) +
+    geom_tile(mapping = aes(fill = n)) + 
+  coord_flip()
+```
+
+
+## Case 3: Two continuous variables
+
+We have already seen scatterplots which are the most common way to visualize the covariation between two continuous variables. For example,
+```{r}
+ggplot(data = diamonds) +
+  geom_point(mapping = aes(x = carat, y = price))
+```
+
+What are some of the problems that may arise in using such a plot? What will happen as the number of observations increases? 
+
+One option is to use shading like this, 
+```{r}
+ggplot(data = diamonds) + 
+  geom_point(mapping = aes(x = carat, y = price), alpha = 1 / 100)
+```
+
+
+Here are a couple of other interesting options. 
+```{r}
+ggplot(data = diamonds) +
+  geom_bin2d(mapping = aes(x = carat, y = price))
+```
 
 
 
 
-# Relationship Between Variables
+
+```{r}
+library(hexbin)
+ggplot(data = diamonds) +
+  geom_hex(mapping = aes(x = carat, y = price))
+```
+
+
+Basically what these do is to bin each of the two variables in order to create a plot analogous to what we did when we compared cut and color with the tile plot. 
+
+Next, we will explore tidy data. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
