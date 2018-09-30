@@ -1,0 +1,247 @@
+---
+title: "Tidy Data Notebook"
+output: html_notebook
+---
+
+This notebook discusses the concept of **tidy data** following [R for Data Science](http://r4ds.had.co.nz/wrangle-intro.html) 
+
+For this notebook, we will use the following packages, all of which are included in the tidyverse package: *ggplot2*, *tibble*, *dplyr*, *tidyr*, and *readr*.  
+
+Load packages:
+```{r,message=FALSE,warning=FALSE}
+library(tidyverse)
+library(gapminder)
+library(emo) # just for fun, not necessary
+```
+
+# Tibbles
+
+A **tibble** is a variation on the data.frame in base R. Using tibbles instead of data.frames can make code run somewhat faster when wrangling data with dplyr. 
+
+If you have a data.frame you can usually coerce it into a tibble. 
+```{r}
+str(iris)
+iris_tib <- as.tibble(iris)
+str(iris_tib)
+```
+Furthermore, you can create a tibble inv ery much the same way that you create a data.frame. 
+```{r}
+df <- data.frame(First=c(1,2,3,4,5,6,7,8),Second=c("one","two","one","one","two","two","one","two"))
+dft <- tibble(First=c(1,2,3,4,5,6,7,8),Second=c("one","two","one","one","two","two","one","two"))
+```
+Now call str:
+```{r}
+str(df)
+str(dft)
+```
+There is an important difference betwene the two results. What is it? 
+
+Also, notice in the following:
+```{r}
+df
+dft
+```
+
+Now let's print iris and its tibbled version:
+```{r}
+iris
+iris_tib
+```
+You have to do this in the command prompt to spot the difference. Tibbles are designed so that you don’t accidentally overwhelm your console when you print large data frames.
+
+What if you want to import data as a tibble? Functions such as read.csv in base R will not do this. However, there are functions in the readr package such as read_csv that will do this. Not only that, these functions usually perform faster on large datasets than those in base R. 
+
+Consider this example:
+```{r}
+df_import <- read_csv("https://raw.githubusercontent.com/jmgraham30/UoSDataSci/master/code/mpg_2008.csv")
+str(df_import)
+```
+
+Notice that the data was read in as a tibble. 
+```{r}
+head(df_import)
+```
+
+
+
+# Tidy Data
+
+## Background
+
+Consider the different representations of the same data presented [here](http://r4ds.had.co.nz/tidy-data.html). These all contain the same exact information but organized in slightly different ways. However, only one of the organizations is "tidy." There are three interrelated rules which make a dataset tidy:
+
+1. Each variable must have its own column.
+2. Each observation must have its own row.
+3. Each value must have its own cell.
+
+These three rules are interrelated because it’s impossible to only satisfy two of the three. That interrelationship leads to an even simpler set of practical instructions:
+
+1. Put each dataset in a tibble.
+2. Put each variable in a column.
+
+Why ensure that your data is tidy? There are two main advantages:
+
+1. There’s a general advantage to picking one consistent way of storing data. If you have a consistent data structure, it’s easier to learn the tools that work with it because they have an underlying uniformity.
+
+2. There’s a specific advantage to placing variables in columns because it allows R’s vectorised nature to shine. As you learned in mutate and summary functions, most built-in R functions work with vectors of values. That makes transforming tidy data feel particularly natural.
+
+
+## Spreading and gathering
+
+Most data that you will encounter will be untidy. There are two main reasons:
+
+1. Most people aren’t familiar with the principles of tidy data, and it’s hard to derive them yourself unless you spend a lot of time working with data.
+
+2. Data is often organised to facilitate some use other than analysis. For example, data is often organised to make entry as easy as possible.
+
+
+Because of this, it is often necessary for the data analyst to transform a data set into a tidy dataset. The package tidyr provides functions that can help to make this task a but easier. The first step is always to figure out what the variables and observations are. Sometimes this is easy; other times you’ll need to consult with the people who originally generated the data. The second step is to resolve one of two common problems:
+
+1. One variable might be spread across multiple columns.
+
+2. One observation might be scattered across multiple rows.
+
+Then the tidyr package provides the functions gather() and spread() to help out with making your data tidy.
+ 
+Suppose we have the following: 
+```{r}
+dl1 <- tibble(country = c("Afghanistan", "Brazil","China"),`1999`=c(745,37737,212258),`2000`=c(2666,80488,213766))
+dl1
+```
+Is this tidy? Why or why not? It is not tidy becuse there are two different observations for the same variable for each country. So we need to gather these together and create a new variable (like year) that makes each row contain only one observation. First we examine the documentation.
+```{r}
+?gather
+```
+Now apply the function. 
+```{r}
+dl1_tidy <- dl1 %>% gather(`1999`,`2000`,key="year",value = "cases")
+dl1_tidy
+```
+Now the data is tidy `r ji("smile") `. See the [diagram](http://r4ds.had.co.nz/tidy-data.html). 
+
+Now suppose that we have the following:
+```{r}
+dl2 <-  tibble(country = c("Afghanistan", "Brazil","China"),`1999`=c(19987071,172006362,1272915272),`2000`=c(20595360,174504898,1280428583))
+dl2
+```
+Of course we can tidy this as
+```{r}
+dl2_tidy <- dl2 %>% gather(`1999`,`2000`,key="year",value = "population")
+dl2_tidy
+```
+
+It is clear that dl1 and dl2 and hence dl1_tidy and dl2_tidy are related and should be combined. This can be done as follows:
+```{r}
+data_tidy <- left_join(dl1_tidy,dl2_tidy)
+data_tidy
+```
+
+The opposite of gathering is spreading, so there is a function called spread that does this. Consider the example:
+```{r}
+dl1_tidy %>% spread(key = year, value = "cases")
+```
+
+This exactly undoes what we did with gather. How can we do use spread to tidy data? Consider the following:
+```{r}
+gt <- gapminder %>% select(-c("continent","lifeExp")) %>% gather(pop, gdpPercap, key = "type",value="value") 
+head(gt)
+tail(gt)
+```
+This is not tidy because individual observations are spread across multiple rows. We can use spread to fix this. For example:
+```{r}
+tidy_gt <- gt %>% spread(key="type",value="value")
+head(tidy_gt)
+```
+Now the data is tidy `r ji("smile") `.
+
+# Separating and uniting
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
