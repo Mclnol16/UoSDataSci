@@ -129,6 +129,16 @@ We see that there are nine rows in diamonds2 that have a y value less than three
 
 
 **Exercise** Use this technique to replace the questionable salary values in the baseball salaries dataset with NA. 
+**Solution**
+```{r}
+url <- "https://raw.githubusercontent.com/jmgraham30/UoSDataSci/master/code/baseballSalaries/Data/Salaries.csv"
+bbs <- read_csv(url)
+bbs %>% top_n(-5)
+bbs2 <- bbs %>% mutate(salary = ifelse(salary < 50000,NA,salary))
+filter(bbs2,is.na(salary))
+```
+
+
 
 
 There is an alternative method for obtaining all rows in a data frame that contain missing
@@ -146,8 +156,11 @@ filter(examp_df,!complete.cases(examp_df))
 This can be very useful. 
 
 
-**Exercise** Find all the rows in the baseball salary data frame where you have replaced salary values with NA.  
-
+**Exercise** Find all the rows in the baseball salary data frame where you have replaced salary values with NA. 
+**Solution**
+```{r}
+filter(bbs2,!complete.cases(bbs2))
+```
 
 Notice what happens if we make a plot where one of the aesthetics is y. 
 ```{r}
