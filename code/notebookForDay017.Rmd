@@ -158,23 +158,32 @@ Now the data is tidy `r ji("smile") `.
 
 
 
+Suppose we have the following table of data:
+```{r}
+tdf <- tibble(country=c("Afghanistan","Afghanistan","Brazil","Brazil","China","China"),year=c(1999,2000,1999,2000,1999,2000),rate=c("745/19987071","2666/20595360","37737/172006362","80488/174504898","212258/1272915272","213766/1280428583"))
+tdf
+```
 
+The rate column actually contains two variables, cases and population but recorded together. We need to split rate into two variables. The separate() function takes the name of the column to separate, and the names of the columns to separate into.
+```{r}
+tdf %>% separate(rate,into=c("cases","population"))
+```
 
+By default, separate() will split values wherever it sees a non-alphanumeric character (i.e. a character that isn’t a number or letter). For example, in the code above, separate() split the values of rate at the forward slash characters. If you wish to use a specific character to separate a column, you can pass the character to the sep argument of separate(). For example:
+```{r}
+tdf %>% separate(rate,into=c("cases","population"),sep="/")
+```
+It would probably be better to have cases and population as numerical rather than characters, this can be achieved as follows:
 
+```{r}
+sep_tdf <- tdf %>% separate(rate,into=c("cases","population"),sep="/",convert=TRUE)
+sep_tdf
+```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+The function unite() is the inverse of separate(): it combines multiple columns into a single column. For example:
+```{r}
+sep_tdf %>% unite(rate,cases,population,sep="/")
+```
 
 
 
