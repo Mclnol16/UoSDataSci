@@ -1,0 +1,186 @@
+---
+title: "Relational Data Notebook"
+output: html_notebook
+---
+
+This notebook discusses the concept of **relational data** following [R for Data Science](http://r4ds.had.co.nz/relational-data.html) 
+
+For this notebook, we will use the following packages, all of which are included in the tidyverse package: *ggplot2*, *tibble*, *dplyr*, *tidyr*, and *readr*.  
+
+Load packages:
+```{r,message=FALSE,warning=FALSE}
+library(tidyverse)
+library(nycflights13)
+library(gapminder)
+library(emo) # just for fun, not necessary
+```
+
+# Relational data
+
+## Background 
+
+It’s rare that a data analysis involves only a single table of data. Typically you have many tables of data, and you must combine them to answer the questions that you’re interested in. Collectively, multiple tables of data are called **relational data** because it is the relations, not just the individual datasets, that are important.
+
+To work with relational data you need verbs that work with pairs of tables. There are three families of verbs designed to work with relational data:
+
+1. **Mutating joins**, which add new variables to one data frame from matching observations in another.
+
+2. **Filtering joins**, which filter observations from one data frame based on whether or not they match an observation in the other table.
+
+3.  **Set operations**, which treat observations as if they were set elements.
+
+We will use the nycflights13 package to learn about relational data. nycflights13 contains four tibbles that are related to the flights table that you used in data transformation:
+
+1. airlines
+2. airports
+3. planes
+4. weather
+
+Take a moment to look at each of the tibbles to familiarize yourself with their contents. The [diagram](http://r4ds.had.co.nz/relational-data.html) shows the relation between each of these tibbles. 
+
+Thus For nycflights13:
+
+* flights connects to planes via a single variable, tailnum.
+
+* flights connects to airlines through the carrier variable.
+
+* flights connects to airports in two ways: via the origin and dest variables.
+
+* flights connects to weather via origin (the location), and year, month, day and hour (the time).
+
+## Keys 
+
+The variables used to connect each pair of tables are called **keys**. A key is a variable (or set of variables) that uniquely identifies an observation. In simple cases, a single variable is sufficient to identify an observation. For example, each plane is uniquely identified by its tailnum. In other cases, multiple variables may be needed. For example, to identify an observation in weather you need five variables: year, month, day, hour, and origin.
+
+There are two types of keys:
+
+* A primary key uniquely identifies an observation in its own table. For example, planes$tailnum is a primary key because it uniquely identifies each plane in the planes table.
+
+* A foreign key uniquely identifies an observation in another table. For example, the flights$tailnum is a foreign key because it appears in the flights table where it matches each flight to a unique plane.
+
+Once you’ve identified the primary keys in your tables, it’s good practice to verify that they do indeed uniquely identify each observation. One way to do that is to count() the primary keys and look for entries where n is greater than one:
+
+```{r}
+planes %>% 
+  count(tailnum) %>% 
+  filter(n > 1)
+```
+
+
+```{r}
+weather %>% 
+  count(year, month, day, hour, origin) %>% 
+  filter(n > 1)
+```
+
+Sometimes a table doesn’t have an explicit primary key: each row is an observation, but no combination of variables reliably identifies it. For example, what’s the primary key in the flights table? You might think it would be the date plus the flight or tail number, but neither of those are unique:
+```{r}
+flights %>% 
+  count(year, month, day, flight) %>% 
+  filter(n > 1)
+```
+
+and 
+
+```{r}
+flights %>% 
+  count(year, month, day, tailnum) %>% 
+  filter(n > 1)
+```
+
+
+When starting to work with this data, I had naively assumed that each flight number would be only used once per day: that would make it much easier to communicate problems with a specific flight. Unfortunately that is not the case! If a table lacks a primary key, it’s sometimes useful to add one with mutate() and row_number(). That makes it easier to match observations if you’ve done some filtering and want to check back in with the original data. This is called a **surrogate key**.
+
+A primary key and the corresponding foreign key in another table form a **relation**. Relations are typically one-to-many. For example, each flight has one plane, but each plane has many flights. In other data, you’ll occasionally see a 1-to-1 relationship. You can think of this as a special case of 1-to-many. You can model many-to-many relations with a many-to-1 relation plus a 1-to-many relation. For example, in this data there’s a many-to-many relationship between airlines and airports: each airline flies to many airports; each airport hosts many airlines.
+
+# Mutating joins
+
+## The idea
+
+The first tool we’ll look at for combining a pair of tables is the mutating join. A mutating join allows you to combine variables from two tables. It first matches observations by their keys, then copies across variables from one table to the other.
+
+Consider this example:
+```{r}
+flights2 <- flights %>% 
+  select(year:day, hour, origin, dest, tailnum, carrier)
+head(flights2)
+flights2 %>%
+  select(-origin, -dest) %>% 
+  left_join(airlines, by = "carrier")
+```
+
+What did this do? 
+
+## Understanding joins
+
+**Read** sections 13.4.1-13.4.3 in [R for Data Science](http://r4ds.had.co.nz/relational-data.html) and implement the examples.
+
+
+What happens if there are duplicate keys? Consider the following:
+```{r}
+x <- tribble(
+  ~key, ~val_x,
+     1, "x1",
+     2, "x2",
+     2, "x3",
+     1, "x4"
+)
+y <- tribble(
+  ~key, ~val_y,
+     1, "y1",
+     2, "y2"
+)
+left_join(x, y, by = "key")
+```
+
+What happened? When you join duplicated keys, you get all possible combinations, the Cartesian product!
+```{r}
+x <- tribble(
+  ~key, ~val_x,
+     1, "x1",
+     2, "x2",
+     2, "x3",
+     3, "x4"
+)
+y <- tribble(
+  ~key, ~val_y,
+     1, "y1",
+     2, "y2",
+     2, "y3",
+     3, "y4"
+)
+left_join(x, y, by = "key")
+```
+
+
+So far, the pairs of tables have always been joined by a single variable, and that variable has the same name in both tables. That constraint was encoded by by = "key". You can use other values for by to connect the tables in other ways:
+```{r}
+flights2 %>% 
+  left_join(weather)
+```
+
+The default, by = NULL, uses all variables that appear in both tables, the so called **natural** join. Note what happens if we specify a variable:
+```{r}
+flights2 %>% 
+  left_join(planes, by = "tailnum")
+```
+
+A named character vector: by = c("a" = "b"). This will match variable a in table x to variable b in table y. The variables from x will be used in the output.
+```{r}
+flights2 %>% 
+  left_join(airports, c("dest" = "faa"))
+```
+
+
+
+
+
+```{r}
+flights2 %>% 
+  left_join(airports, c("origin" = "faa"))
+```
+
+
+
+
+
